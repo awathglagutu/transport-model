@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transport Choice Model Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        header {
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        h2 { font-weight: 600; font-size: 2rem; margin-bottom: 8px; }
+        p { color: var(--text-muted); }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        button:hover { background-color: var(--primary-hover); }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .btn-secondary:hover { background-color: rgba(79, 70, 229, 0.05); }
+
+        #inputs {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .results-area {
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            margin-top: 16px;
+        }
+
+        canvas {
+            margin-top: 32px;
+            max-width: 100% !important;
+        }
+
+        @media (max-width: 600px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h2>Transport Mode Choice Model</h2>
+        <p>Analyze and predict commuter preferences based on weighted utility.</p>
+    </header>
+
+    <div class="grid-layout">
+        <div class="card">
+            <div class="input-group">
+                <label>Number of Respondents</label>
+                <input type="number" id="numRespondents" value="3">
+            </div>
+            <button class="btn-secondary" onclick="generateInputs()">Generate Input Fields</button>
+            <div id="inputs"></div>
+        </div>
+
+        <div class="card">
+            <h3>Model Weights</h3>
+            <div class="grid-layout" style="gap: 12px;">
+                <div class="input-group">
+                    <label>Driving Experience</label>
+                    <input type="number" id="w1" step="0.1" value="0.4">
+                </div>
+                <div class="input-group">
+                    <label>Journey Quality</label>
+                    <input type="number" id="w2" step="0.1" value="0.3">
+                </div>
+                <div class="input-group">
+                    <label>Food Availability</label>
+                    <input type="number" id="w3" step="0.1" value="0.1">
+                </div>
+                <div class="input-group">
+                    <label>Cost Affordability</label>
+                    <input type="number" id="w4" step="0.1" value="0.2">
+                </div>
+            </div>
+
+            <button onclick="calculate()">Calculate Results</button>
+
+            <h4 style="margin-top: 24px;">Output</h4>
+            <div id="output" class="results-area">Results will appear here...</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Data Visualization</h3>
+        <canvas id="chart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
